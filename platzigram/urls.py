@@ -18,11 +18,17 @@ from django.contrib import admin
 from django.urls import path
 from platzigram import views as local_views
 from posts import views as post_views
+from users import views as user_views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hello-world/', local_views.hello_world),
-    path("sort/", local_views.sort_num),
-    path("guten-tag/<str:name>/<int:jahre_alt>/", local_views.guten_tag),
-    path("posts/", post_views.list_posts)
-]
+    path('hello-world/', local_views.hello_world, name="hello_world"),
+    path("sort/", local_views.sort_num, name="sorted"),
+    path("guten-tag/<str:name>/<int:jahre_alt>/",
+         local_views.guten_tag,
+         name="hi"),
+    path("posts/", post_views.list_posts, name="feed"),
+    path('users/login', user_views.login_view, name="login")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,6 @@
 """ Posts Views """
 # Django Imp
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
 # Utilities Imp
@@ -33,7 +34,8 @@ posts = [{
 }]
 
 
+@login_required
 def list_posts(request):
     """ List existing posts """
     ctx = {"name": "alejandro", "age": 22, "posts": posts}
-    return render(request, "feed.html", ctx)
+    return render(request, "posts/feed.html", ctx)
